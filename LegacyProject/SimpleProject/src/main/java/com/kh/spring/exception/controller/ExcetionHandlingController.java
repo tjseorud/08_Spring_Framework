@@ -19,7 +19,7 @@ public class ExcetionHandlingController {
 	private ModelAndView createErrorResponse(String erroMsg, Exception e) {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("message",erroMsg).setViewName("include/error_page");
-		log.info("발생 예외 : {}",erroMsg);
+		log.info("발생 예외 : {}", erroMsg, mv);
 		return mv;
 	}
 	
