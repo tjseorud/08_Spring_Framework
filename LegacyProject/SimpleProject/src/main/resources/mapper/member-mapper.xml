@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+	<select id="login" parameterType="MemberDTO" resultType="MemberDTO">
+		SELECT MEMBER_ID	AS memberId
+			 , MEMBER_PW	AS memberPw
+			 , MEMBER_NAME	AS memberName
+			 , EMAIL
+			 , ENROLL_DATE	AS enrollDate
+		  FROM KH_MEMBER
+		 WHERE MEMBER_ID = #{ memberId }
+		   
+	</select>
+	
+	<select id="checkId" parameterType="string" resultType="_int">
+		SELECT COUNT(*)
+		  FROM KH_MEMBER
+		 WHERE MEMBER_ID = #{ memberId }
+	</select>
+	
+	<insert id="signUp" parameterType="MemberDTO">
+		INSERT INTO KH_MEMBER
+		VALUES (#{ memberId }
+			  , #{ memberPw }
+			  , #{ memberName }
+			  , #{ email }
+			  , SYSDATE)
+	</insert>
+</mapper>
