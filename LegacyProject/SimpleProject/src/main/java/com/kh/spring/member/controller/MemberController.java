@@ -141,4 +141,51 @@ public class MemberController {
 		return "main_page";
 	}
 	
+	@GetMapping("my-page")
+	public String myPage() {
+		return "member/my_page";
+	}
+	
+	@PostMapping("update-member")
+	public String update(MemberDTO member, HttpSession session) {
+		//1. 컨트롤러에서는 리쿼스트매핑 애노테이션 및 요청시 전달값이 잘 전달되는지 확인
+		/*
+		 * 1_1) 404 발생 : mapping값 잘못 작성
+		 *  -PageNotFound
+		 * 
+		 * 1_2) 405 발생 : 앞단에선 POST/GET으로 요청을 보내놓고 메소드와 맞지않은 애노테이션을 사용했을때
+		 *  -Request method 'POST' not supported
+		 *  
+		 * 1_3) 필드에 값이 들어오지 않는 경우 - 입력단 확인!
+		 */
+		log.info("사용자가 입력한 값 : {}", member);
+		//2. 이번에 실행할 SQL문을 생각
+		//UPDATE문 		==>KH_MEMBER(PK : MEMBER_ID)
+		//ID, PW, NAME, EMAIL, DATE
+		// 2_1) 매개변수 MemberDTO타입의 memberId 필드값
+		// 2_2) SessionScope에 loginMember 키값에 memberId 필드값
+		// 넘겨줘야하겠네 +
+		// 값들이 유효한 값인지 체크하기
+		// MemberId가 존재하는 아이디인지 체크하기
+		
+		// UPDATE KH_MEMBER SET MEMBER_NAME = 사용자가 입력한 이름,
+		//						EMAIL = 사용자가 입력한 이메일
+		//				  WHERE MEMBER_ID = 사용자가 입력한 아이디
+		// UPDATE 수행결과 => PK를 조건으로 수행함 => 0/1
+		
+		//수행 성공시 =>
+		//my_page.jsp로 이동 + 갱신된 회원의 정보 출력
+		
+		//수행 실패시 =>
+		//memssage를 담아서 error_page로 포워딩
+		//예외발생 =>예외처리기로 위임
+		
+		memberService.update(member, session);
+		return "redirect:my-page";
+	}
+	// 탈퇴구현 숙제..?
+	// 비밀번호 입력받고 맞는지 검증 => 예외발생하기
+	// delete 성공했는지?
+	
+	
 }
