@@ -110,7 +110,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int delete(MemberDTO member) {
+	public int delete(MemberDTO member, HttpSession session) {
+		if( !member.getMemberId().equals(((MemberDTO)session.getAttribute("loginMember")).getMemberId())){
+			throw new AuthenticationException("권한이 없습니다");
+		}
+		
 		return 0;
 	}
 	

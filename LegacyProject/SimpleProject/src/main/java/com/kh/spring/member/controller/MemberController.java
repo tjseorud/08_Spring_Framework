@@ -186,6 +186,11 @@ public class MemberController {
 	// 탈퇴구현 숙제..?
 	// 비밀번호 입력받고 맞는지 검증 => 예외발생하기
 	// delete 성공했는지?
-	
+	@PostMapping("delete-member")
+	public void delete(MemberDTO member,  HttpSession session) {
+		log.info("사용자가 입력한 값 : {}", member);
+		
+		memberService.delete(member, session);
+	}
 	
 }

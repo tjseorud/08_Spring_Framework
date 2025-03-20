@@ -18,7 +18,7 @@ public interface MemberService {
 //	int update(MemberDTO member, HttpSession session);
 	
 	//회원탈퇴
-	int delete(MemberDTO member);
+	int delete(MemberDTO member, HttpSession session);
 	
 	//아이디 중복체크
 	
