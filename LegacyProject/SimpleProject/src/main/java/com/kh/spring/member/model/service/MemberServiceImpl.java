@@ -110,12 +110,17 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int delete(MemberDTO member, HttpSession session) {
-		if( !member.getMemberId().equals(((MemberDTO)session.getAttribute("loginMember")).getMemberId())){
+	public void delete(MemberDTO member, HttpSession session) {
+		MemberDTO sessionMember = ((MemberDTO)session.getAttribute("loginMember"));
+		if( !member.getMemberId().equals(sessionMember.getMemberId())){
 			throw new AuthenticationException("권한이 없습니다");
 		}
+		if(passwordEncoder.matches(member.getMemberPw(), sessionMember.getMemberPw())) {
+			memberMapper.delete(member);
+		} else {
+			throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다.");
+		}
 		
-		return 0;
 	}
 	
 }
