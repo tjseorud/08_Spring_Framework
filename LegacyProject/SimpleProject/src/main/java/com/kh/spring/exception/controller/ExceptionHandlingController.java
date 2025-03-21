@@ -1,7 +1,5 @@
 package com.kh.spring.exception.controller;
 
-import java.security.InvalidParameterException;
-
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -11,12 +9,13 @@ import com.kh.spring.exception.PasswordNotMatchException;
 import com.kh.spring.exception.TooLargeValueException;
 import com.kh.spring.exception.AuthenticationException;
 import com.kh.spring.exception.DuplicateIdException;
+import com.kh.spring.exception.InvalidParameterException;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @ControllerAdvice
-public class ExcetionHandlingController {
+public class ExceptionHandlingController {
 	
 	private ModelAndView createErrorResponse(String erroMsg, Exception e) {
 		ModelAndView mv = new ModelAndView();

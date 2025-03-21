@@ -1,5 +1,9 @@
 package com.kh.spring.board.model.dto;
 
+import java.util.List;
+
+import com.kh.spring.reply.model.dto.ReplyDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +25,5 @@ public class BoardDTO {
 	private String createDate;
 	private String changeName;
 	private String status;	
-
+	private List<ReplyDTO> replyList;
 }
