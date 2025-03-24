@@ -21,5 +21,5 @@ public interface MemberService {
 	void delete(MemberDTO member, HttpSession session);
 	
 	//아이디 중복체크
-	
+	String idCheck(String memberId);
 }

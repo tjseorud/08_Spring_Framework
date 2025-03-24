@@ -123,5 +123,11 @@ public class MemberServiceImpl implements MemberService {
 		} 
 		
 	}
+
+	@Override
+	public String idCheck(String memberId) {
+		//String result = 	
+		return memberMapper.idCheck(memberId) != null ? "NNNNY" : "NNNNN";
+	}
 	
 }

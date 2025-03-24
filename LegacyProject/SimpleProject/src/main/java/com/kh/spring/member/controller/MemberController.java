@@ -194,4 +194,13 @@ public class MemberController {
 		return "redirect:logout";
 	}
 	
+	@GetMapping("id-check")
+	public String idCheck(@RequestParam(name="memberId") String memberId) {
+		//응답을 어뎋게 돌려줄것인지
+		//조회 결과가 있다 / 없다
+		//		NNNNY / NNNNN
+		//memberService.idCheck(memberId);
+		//SELECT MEMBER_ID FROM KH_MEMBER WHERE MEMBER_ID = 사용자가 입력한 아이디
+		return memberService.idCheck(memberId);
+	}
 }
