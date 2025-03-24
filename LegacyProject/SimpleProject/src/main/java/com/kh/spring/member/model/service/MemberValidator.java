@@ -5,6 +5,7 @@ import java.security.InvalidParameterException;
 import org.springframework.stereotype.Component;
 
 import com.kh.spring.exception.MemberNotFoundException;
+import com.kh.spring.exception.PasswordNotMatchException;
 import com.kh.spring.exception.TooLargeValueException;
 import com.kh.spring.exception.DuplicateIdException;
 import com.kh.spring.member.model.dao.MemberMapper;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 public class MemberValidator {
 	
 	private final MemberMapper mapper;
+	private final PasswordEncoder passwordEncoder;
 	
 	private void validatedLength(MemberDTO member) {
 		if(member.getMemberId().length() > 10) {
@@ -51,6 +53,11 @@ public class MemberValidator {
 	public void validatedLoginMember(MemberDTO member) {
 		validatedLength(member);
 		validatedValue(member);
+	}	
+	
+	public void validatedCheckIdPw(MemberDTO member) {
+		validatedValue(member);
+		validatePwCheck(member);
 	}		
 	
 	public MemberDTO validateMemberExists(MemberDTO member) {
@@ -60,5 +67,16 @@ public class MemberValidator {
 		}
 		throw new MemberNotFoundException("존재하지 않는 아이디 입니다.");
 	}
+	
+	public MemberDTO validatePwCheck(MemberDTO member) {
+		MemberDTO loginMember = mapper.login(member);
+		if(passwordEncoder.matches(member.getMemberPw(), loginMember.getMemberPw())) {
+			return loginMember;
+		} else {
+			throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다.");
+		}
+	}
+	
+	
 		
 }

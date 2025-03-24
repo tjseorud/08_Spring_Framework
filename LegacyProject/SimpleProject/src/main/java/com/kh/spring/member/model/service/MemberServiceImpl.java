@@ -52,12 +52,14 @@ public class MemberServiceImpl implements MemberService {
 		//2. 아이디만 가지고 조회하기떄문에 비밀번호 검증후
 		//	비밀번호가 유효하다면 회원정보를 session에 담기
 		//	비밀번호가 유효하지않다면 비번이 이상한데??
-		MemberDTO loginMember = validator.validateMemberExists(member);
-		if(passwordEncoder.matches(member.getMemberPw(), loginMember.getMemberPw())) {
+		validator.validateMemberExists(member);
+		/*if(passwordEncoder.matches(member.getMemberPw(), loginMember.getMemberPw())) {
 			return loginMember;
 		} else {
 			throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다.");
-		}
+		}*/
+		MemberDTO loginMember = validator.validatePwCheck(member);
+		return loginMember;
 	}
 
 	@Override
@@ -111,19 +113,14 @@ public class MemberServiceImpl implements MemberService {
 
 	@Override
 	public void delete(MemberDTO member, HttpSession session) {
-		MemberDTO sessionMember = ((MemberDTO)session.getAttribute("loginMember"));
-		//사용자검증
-		if(sessionMember == null) {
-			throw new NullPointerException("빈칸이 있어요");
-		}
-		//존재하는 아이디인지 검증
-		validator.validateMemberExists(member);
-		//SQL문 수행결과 검증
-		if(passwordEncoder.matches(member.getMemberPw(), sessionMember.getMemberPw())) {			
-			//memberMapper.delete(member);
-		} else {
-			throw new PasswordNotMatchException("비밀번호가 일치하지 않습니다.");
-		}
+		member.setMemberId(((MemberDTO)session.getAttribute("loginMember")).getMemberId());
+		
+		validator.validatedCheckIdPw(member);
+		int result = memberMapper.delete(member);	
+		
+		if(result != 1) {
+			throw new AuthenticationException("삭제할 때 문제가 있으니 다시 시도해주세요.");
+		} 
 		
 	}
 	

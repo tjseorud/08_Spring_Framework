@@ -41,9 +41,12 @@ public interface BoardService {
 	
 	//게시글 삭제(STATUS 업데이트 하기 Y => N)
 	void deleteBoard(int boardNo);
-	
+
 	
 	//게시글 검색
+	Map<String, Object> doSearch(Map<String, String> map);
+	
+	
 	
 	
 }
