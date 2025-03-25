@@ -19,7 +19,7 @@ public interface MemberMapper {
 	@Update("UPDATE KH_MEMBER SET MEMBER_NAME = #{ memberName }, EMAIL = #{ email } WHERE MEMBER_ID = #{ memberId }")
 	int update(MemberDTO member);
 	
-	@Delete("DELETE FROM KH_MEMBER WHERE MEMBER_ID = #{ memberId } AND MEMBER_PW = #{ memberPw }")
+	@Delete("DELETE FROM KH_MEMBER WHERE MEMBER_ID = #{ memberId }")
 	int delete(MemberDTO member);	
 	
 	@Select("SELECT MEMBER_ID FROM KH_MEMBER WHERE MEMBER_ID = #{ memberId }")

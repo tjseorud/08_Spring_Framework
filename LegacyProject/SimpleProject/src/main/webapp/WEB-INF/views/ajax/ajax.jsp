@@ -33,26 +33,30 @@
 		모든 요청 및 응답 처리를 AJAX로 구현
 	</pre>
 	<pre>
-		* 실전 압축 JQuery 사용법
-		1. 요소선택
-			document.querySelector('CSS 선택자');
-			==
-			$('CSS 선택자');
+		* 실전 압축 jQuery 사용법		
+		1. 요소 선택
+		document.querySelector('CSS 선택자');		
+		$('CSS선택자');
 		
-		2. 이벤트
-			.addEventListner('click', ()=>{
-				이벤트 발생시 수행할 코드
-			});
-			==
-			.click(()=>{
-				이벤트 발생시 수행할 코드
-			});
+		
+		2. 이벤트		
+		.addEventListner('click', () => {
+			이벤트 발생 시 수행할 코드
+		});	
 			
-		3. 
-			
-
-
-		4. 
+		.click(() => {
+			이벤트 발생 시 수행할 코드
+		});
+		
+		
+		3. Content값 변경	
+			.innerHTML = '대입하고 싶은 값';
+			.html('대입하고 싶은값');
+		
+		
+		4. style변경		
+			.style.세부스타일속성 = '스타일속성값';	
+			.css('스타일속성', '스타일속성값');
 	</pre>
 	<pre>
 		* JQuery를 사용한 AJAX통신
@@ -91,21 +95,74 @@
 	
 	<h3>VO단일 객체를 조회해서 출력해보기</h3>
 	<div>
-		댓글 번호 :<p id="title"></p>
-		댓글 작성자 :<p id="writer"></p>
-		댓글 내용 :<p id="content"></p>
-		댓글 작성일 :<p id="date"></p>
+		게시글 제목 :<p id="title"></p>
+		게시글 작성자 :<p id="writer"></p>
+		게시글 내용 :<p id="content"></p>
+		게시글 작성일 :<p id="date"></p>
+		<hr>
+		<img id="board-img"/>
+		<hr>
+		<div id="reply-area">
+		
+		</div>
 	</div>
-	댓글 번호 :<input type="text" id="replyNo">
-	<button onclick="selectReply()">댓글 보기</button>
+	게시글 번호 :<input type="text" id="replyNo">
+	<button onclick="selectReply()">게시글 보여줘</button>
 	<!--
-		계획:
+		우리의 계획 :
 		사용자가 입력이라고 써있는 input요소에 값을 입력해서
 		AJAX로 요청보내기 버튼을 누르면
 		
-		요청을 받아
+		AJAX요청을 보내서
+		
+		요청을 받아 처리하는 RequestHandler가 값을 받아서 응답을 해주고
+		라벨요소의 Content영역에 응답받은 데이터를 출력할 것
 	 -->
 	<script>
+		function selectReply() {
+			const replyNo = document.getElementById('replyNo').value;
+			
+			$.ajax({
+				url :`study?replyNo=\${replyNo}`,
+				type :'get',
+				success : result =>{
+					console.log(result);
+					//document.querySelector('#title').innerText = result.boardTitle;
+					//document.querySelector('#writer').innerText = result.boardWriter;
+					//document.querySelector('#content').innerText = result.boardContent;
+					//document.querySelector('#date').innerText = result.createDate;
+					$('#title').text(result.boardTitle);
+					$('#writer').text(result.boardWriter);
+					$('#content').text(result.boardContent);
+					$('#date').text(result.createDate);
+					
+					const imgEl = document.querySelector('#board-img');
+					
+					imgEl.src = result.changeName != undefined ? result.changeName : '';										
+					//if(result.changeName){
+						//$('#board-img').attr('src', result.changeName);
+					//}else {
+						//$('#board-img').attr('src',"");
+					//}
+					
+					const reply = result.replyList;
+					
+					const elements = reply.map(e=>{
+						return(`<div>
+									<label style="width :330px">댓글 작성자 : \${e.replyWriter}</label>
+									<label style="width :360px">댓글 내용 : \${e.replyContent}</label>
+									<label style="width :180px">댓글 작성일 : \${e.createDate}</label>
+								</div>`)
+					}).join('');
+					
+					document.querySelector('#reply-area').innerHTML = elements;
+					//$('#reply-area');
+				}
+			});
+		}
+	
+	
+	
 		$('#ajax-btn').click(()=>{
 			const inputValue = $('#ajax-input').val();
 			
@@ -121,7 +178,6 @@
 			});
 		});
 	</script>
-
-	</script>
+	
 </body>
 </html>

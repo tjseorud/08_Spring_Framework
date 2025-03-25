@@ -35,11 +35,14 @@
     -->
     <script>
     	window.onload = function() {
-			const inputEl = document.querySelector('#signup-form > #userId');
+			//const inputEl = document.querySelector('#signup-form > #userId');			
+			$('#signup-form > #userId').keyup(()=>{
 			//console.log(inputEl);	
-			inputEl.addEventListener('keyup',()=>{
-				const inputValue = inputEl.value;
-				console.log(inputValue);
+			
+			//inputEl.addEventListener('keyup',()=>{			
+				//const inputValue = inputEl.value;
+				const inputValue = $('#signup-form > #userId').val();
+				//console.log(inputValue);
 				
 				if(inputValue.length >= 5){
 					$.ajax({

@@ -169,4 +169,13 @@ public class BoardServiceImpl implements BoardService {
 		return returnValue;
 	}
 
+	@Override
+	public int insertReply(ReplyDTO reply, HttpSession session) {
+		String memberId = ((MemberDTO)session.getAttribute("loginMember")).getMemberId();
+		reply.setReplyWriter(memberId);
+		//SEQ_RNO
+		return boardMapper.insertReply(reply);
+	}
+
+
 }
