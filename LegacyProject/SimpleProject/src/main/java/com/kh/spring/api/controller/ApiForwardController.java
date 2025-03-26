@@ -20,4 +20,11 @@ public class ApiForwardController {
 	public String mapPage() {
 		return "api/map";
 	}
+	
+	@GetMapping("shopping")
+	public String shoppingPage() {
+		return "api/shopping";
+	}
+	
+	
 }

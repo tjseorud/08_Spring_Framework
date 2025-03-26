@@ -22,18 +22,20 @@ public class ApiSafetyController {
 	
 	private final SafetyService safetyService;
 	
-	@ResponseBody
 	@GetMapping(value="hospitals")
 	public String requestHospitalApi() throws IOException {		
 		return safetyService.requestHospitalApi();
 	}
 	
-	@ResponseBody
 	@GetMapping(value = "message")
 	public String requestMessage(@RequestParam(name="pageNo") int pageNo) {
 		return safetyService.requestMessage(pageNo);
 	}
 	
+	@GetMapping("naver-shopping")
+	public String getItem(@RequestParam(name="query") String query) {
+		return safetyService.getItems(query);
+	}
 	
 }
 

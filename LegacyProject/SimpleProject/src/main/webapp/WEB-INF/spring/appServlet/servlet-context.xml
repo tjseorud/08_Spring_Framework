@@ -23,6 +23,7 @@
 	
 	<context:component-scan base-package="com.kh.spring" />
 	
+	<!-- 권한 확인후 보여줄지 여부 -->
 	<interceptors>
 		<interceptor>
 			<mapping path="/my-page/**"/>
