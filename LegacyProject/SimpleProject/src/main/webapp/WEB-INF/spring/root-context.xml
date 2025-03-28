@@ -37,7 +37,7 @@
 	 </bean>
 	 <!-- SqlSession sqlSession = new org.mybatis.spring.SqlSessionTemplate() -->
 	  
-	 <mybatis-spring:scan base-package="com.kh.spring.member.model.dao, com.kh.spring.board.model.mapper"/>
+	 <mybatis-spring:scan base-package="com.kh.spring.member.model.dao, com.kh.spring.board.model.mapper, com.kh.spring.busan.model.mapper"/>
 	  
 	 <!-- 파일업로드 관련 빈 등록 -->
 	 <bean class="org.springframework.web.multipart.commons.CommonsMultipartResolver" id="multipartResolver">

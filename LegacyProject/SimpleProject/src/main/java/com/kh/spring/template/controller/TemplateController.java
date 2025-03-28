@@ -24,7 +24,7 @@ public class TemplateController {
 	@GetMapping
 	public ResponseEntity<String> getTemplats(@RequestParam(name = "pageNo", defaultValue = "1") int pageNo) {
 		//log.info("pageNo : {}",pageNo);
-		String responseData = templateService.requestGetTemplat(pageNo);
+		String responseData = templateService.requestGetTemplate(pageNo);
 		
 		return ResponseEntity.ok(responseData);		
 	}
